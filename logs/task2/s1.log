@@ -1,0 +1,55 @@
+[s6-init] making user provided files available at /var/run/s6/etc...exited 0.
+[s6-init] ensuring user provided files have correct perms...exited 0.
+[fix-attrs.d] applying ownership & permissions fixes...
+[fix-attrs.d] done.
+[cont-init.d] executing container initialization scripts...
+[cont-init.d] done.
+[services.d] starting services
+[services.d] done.
+/opt/bin/serf agent --join ha --tag role=backend
+==> Starting Serf agent...
+==> Starting Serf agent RPC...
+==> Serf agent running!
+         Node name: '751b0096a8ff'
+         Bind addr: '0.0.0.0:7946'
+          RPC addr: '127.0.0.1:7373'
+         Encrypted: false
+          Snapshot: false
+           Profile: lan
+==> Joining cluster...(replay: false)
+    Join completed. Synced with 1 initial agents
+
+==> Log data will now stream in as it occurs:
+
+    2019/12/11 14:16:48 [INFO] agent: Serf agent starting
+    2019/12/11 14:16:48 [INFO] serf: EventMemberJoin: 751b0096a8ff 192.168.42.11
+    2019/12/11 14:16:48 [INFO] agent: joining: [ha] replay: false
+    2019/12/11 14:16:48 [INFO] serf: EventMemberJoin: 46a8b649ee89 192.168.42.22
+    2019/12/11 14:16:48 [INFO] serf: EventMemberJoin: 257cde2c8391 192.168.42.42
+    2019/12/11 14:16:48 [INFO] agent: joined: 1 nodes
+Application started
+    2019/12/11 14:16:49 [INFO] agent: Received event: member-join
+[0mHEAD / [32m200 [0m7.245 ms - 114[0m
+[0mHEAD / [32m200 [0m0.774 ms - 114[0m
+[0mHEAD / [32m200 [0m0.868 ms - 114[0m
+[0mHEAD / [32m200 [0m0.853 ms - 114[0m
+[0mHEAD / [32m200 [0m1.140 ms - 114[0m
+[0mHEAD / [32m200 [0m0.681 ms - 114[0m
+[0mHEAD / [32m200 [0m0.690 ms - 114[0m
+[0mHEAD / [32m200 [0m0.643 ms - 114[0m
+[0mHEAD / [32m200 [0m0.700 ms - 114[0m
+[0mHEAD / [32m200 [0m0.662 ms - 114[0m
+[0mHEAD / [32m200 [0m0.667 ms - 114[0m
+[0mHEAD / [32m200 [0m0.695 ms - 114[0m
+[0mHEAD / [32m200 [0m0.630 ms - 114[0m
+[0mHEAD / [32m200 [0m0.671 ms - 114[0m
+[0mHEAD / [32m200 [0m0.616 ms - 114[0m
+[0mHEAD / [32m200 [0m0.639 ms - 114[0m
+[0mHEAD / [32m200 [0m0.629 ms - 114[0m
+[0mHEAD / [32m200 [0m0.644 ms - 114[0m
+[0mHEAD / [32m200 [0m0.656 ms - 114[0m
+[0mHEAD / [32m200 [0m0.616 ms - 114[0m
+[0mHEAD / [32m200 [0m0.610 ms - 114[0m
+[0mHEAD / [32m200 [0m0.607 ms - 114[0m
+[0mHEAD / [32m200 [0m1.286 ms - 114[0m
+[0mHEAD / [32m200 [0m0.595 ms - 114[0m
