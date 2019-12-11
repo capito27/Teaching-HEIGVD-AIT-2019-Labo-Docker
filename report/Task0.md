@@ -5,6 +5,7 @@
 We can't use the current solution in a production environment.
 This is due to the lack of a scaling mechanism. 
 Indeed, the current 2 web app containers would instantly be at full load if they were to be deployed to production.
+There are also no recovery systems in place if the application crashes, if the docker container goes down, the server won't be restarted, and the reverse proxy will lose the node until someone goes back and restart/recreate the container.
 
 ### 2)
 
