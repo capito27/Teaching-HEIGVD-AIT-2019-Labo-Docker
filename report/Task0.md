@@ -2,20 +2,24 @@
 ## Questions :
 
 ### 1)
-We can't use the current solution in a production environment.
-This is due to the lack of a scaling mechanism. 
-Indeed, the current 2 web app containers would instantly be at full load if they were to be deployed to production.
-There are also no recovery systems in place if the application crashes, if the docker container goes down, the server won't be restarted, and the reverse proxy will lose the node until someone goes back and restart/recreate the container.
+Il n'est pas enviagable d'utiliser la solution actuelle dans un environement de production.
+
+Ceci est dû au fait qu'il n'y à aucun mechanisme de scalabilitée, Il n'y à pas de systeme de réstauration de noeuds dans le cas ou un noeud tombe ainsi que le fait que la configuration de HAProxy n'est pas mise à jour automatiquement selon les changements des noeuds.
+
+En effet, avec les 2 conteneurs actuels, le système serait immpédiatement surchargé dans un environement de production.
+
+Ainsi que si l'un des noeuds crash, il faut une interaction manuelle pour le restaurer.
 
 ### 2)
 
-You would need to add the following lines to the `.env` file :
+Il faut ajouter les lignes suivantes dans le fichier `.env` :
+
 ```
 WEBAPP_3_NAME=s3
 WEBAPP_3_IP=192.168.42.33
 ```
 
-As well as adding the following lines to the `docker-compose.yml` file, before the `haproxy` service :
+Ajouter également les lignes suivantes au fichier `docker-compose.yml` file, avant le service `haproxy` :
 ```
   webapp3:
        container_name: ${WEBAPP_3_NAME}
@@ -26,38 +30,43 @@ As well as adding the following lines to the `docker-compose.yml` file, before t
          heig:
            ipv4_address: ${WEBAPP_3_IP}
        ports:
-         - "4001:3000"
+         - "4002:3000"
        environment:
             - TAG=${WEBAPP_3_NAME}
             - SERVER_IP=${WEBAPP_3_IP}
 ```
 
-Add the following lines to environment field of the `haproxy` service, in the `docker-compose.yml` :
+Ajouter également les lignes suivantes au fichier `docker-compose.yml` file, dans les lignes d'environement du service `haproxy` :
 ```
             - WEBAPP_3_IP=${WEBAPP_3_IP}
 ```
 
-And finally, add the following line at the end of the backend nodes section of the `haproxy` config file, found at `ha/config/haproxy.cfg` :
+Et finalement, ajouter à la fin de la section "backend nodes" de la configuration de haproxy, dans le fichier `ha/config/haproxy.cfg` :
 ```
     server s3 ${WEBAPP_3_IP}:3000 check
 ```
 
 ### 3)
-We could use a host script to spin up or downsome more nodes, and use a comunication mechanism to communicate with HAProxy to update it's running configuration to account for the newly available nodes.
+Il serait possible d'utiliser un script hote afin de monter ou démonter de nouveaux noeuds, et utiliser un système de communication avec HAProxy afin de mettre à jour la configuration en cours, pour qu'elle prenne en compte les noeuds qui ont été ajoutés ou supprimés.
 
 ### 4)
-We could probably use HA's Runtime API to manage the proxy in an asynchronous fashion to add or remove nodes to the proxy's config.
-Or, at least we would be able to do so, if the currently used HA proxy's version was at least 1.8 (it's 1.5).
+Il est probablement possible d'utiliser l'API Runtime de HAProxy afin de le manager de façon asynchrone pour ajouter et supprimer des noeuds à la config du proxy.
+Ou du moins on serait sensé pouvoir le faire si la version de HAProxy utilisée actuellement était au mois 1.8 (c'est la 1.5).
 
-Use Traefik instead of HAProxy to solve this problem is a much cleaner fashion....
+Utiliser Traefik au lieu de HAProxy pour résoudre ce problème de manière bien plus élégante...
 
 ### 5)
-Our current solution is unable to run multiple processes, due to relying on the default docker behaviours.
-Indeed, currently, the dockerfile starts the webserver in a blocking fashion. We would need to use a mechanism to start multiple processes at the start of a container.
+
+Notre solution actuelle est incappable d'executer plusieurs processus, car elle se repose sur les comportements par défaut de docker.
+
+En effet, en ce moment, le Dockerfile démarre le conteneur webapp de façon bloquant, il faudrait untiliser un mechanisme ou solution pour dérmarrer plusieurs processus à la création du conteneur.
+
+
 
 ### 6)
-This is wrong. The script doesn't end up achieving anything, since there is no `<s1>` on the haproxy.cfg file. as such, nothing happens if we add more nodes. it's not dynamic since it doesn't do anyting.
-A better solution would be to replace HAproxy with Traefik
+C'est faux. Le script ne fais rien au final, car il n'y à pas de balise `<s1>` dans le fichier haproxy.cfg. Donc, en conséquance, rien ne se passe si on ajoute plus de noeuds. Ce n'est pas dynamique, car le script ne fait rien.
+
+Une meilleur solution serait de remplacer HAProxy par Traefik...
 
 ##Deliverables :
 

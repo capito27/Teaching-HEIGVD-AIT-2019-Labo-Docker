@@ -7,10 +7,12 @@ La réponse est fournie au niveau de la task 0, avec la M1 principalement.
 
 La voici à nouveau : 
 
+> Il n'est pas enviagable d'utiliser la solution actuelle dans un environement de production.
 
-We can't use the current solution in a production environment.
-This is due to the lack of a scaling mechanism. 
-Indeed, the current 2 web app containers would instantly be at full load if they were to be deployed to production.
-There are also no recovery systems in place if the application crashes, if the docker container goes down, the server won't be restarted, and the reverse proxy will lose the node until someone goes back and restart/recreate the container.
+> Ceci est dû au fait qu'il n'y à aucun mechanisme de scalabilitée, Il n'y à pas de systeme de réstauration de noeuds dans le cas ou un noeud tombe ainsi que le fait que la configuration de HAProxy n'est pas mise à jour automatiquement selon les changements des noeuds.
+
+> En effet, avec les 2 conteneurs actuels, le système serait immpédiatement surchargé dans un environement de production.
+
+> Ainsi que si l'un des noeuds crash, il faut une interaction manuelle pour
 
 ###3
