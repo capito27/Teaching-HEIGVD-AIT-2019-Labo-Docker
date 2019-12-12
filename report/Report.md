@@ -9,17 +9,17 @@
 ## Table des matières
 
 - [Introduction](#introduction)
-- ![Task 0](./Task0.md)
-- ![Task 1](./Task1.md)
-- ![Task 2](./Task2.md)
-- ![Task 3](./Task3.md)
-- ![Task 4](./Task4.md)
-- ![Task 5](./Task5.md)
-- ![Task 6](./Task6.md)
-- ![Difficulté](./Difficulty.md)
+- [Task 0](./Task0.md)
+- [Task 1](./Task1.md)
+- [Task 2](./Task2.md)
+- [Task 3](./Task3.md)
+- [Task 4](./Task4.md)
+- [Task 5](./Task5.md)
+- [Task 6](./Task6.md)
+- [Difficulté](./Difficulty.md)
 - [Conclusion](#conclusion)
 
-## Introduction {introduction}
+## Introduction
 
 Dans ce laboratoire, nous avons détaillé la procédure pour permettre une scalability dynamique d'une infrastructure utilisant HAProxy.
 Nous allons mettre en place pour ce faire le système S6 qui permet la mise en place de plusieurs processus dans un même docker pour permettre une remise en marche du processus d'application en cas de crash.
@@ -28,7 +28,7 @@ Serf permet aussi de connaître lorsqu'un noeud disparaît et permet que l'ensem
 
 Ces notifications permirent alors de constituer une liste de machine ayant un service à disposition, cette liste sera alors convertie en configuration pour HAProxy permettant alors l'utilisation de ces noeuds par le reverse proxy.
 
-## Conclusion {conclusion}
+## Conclusion
 
 Nous avons pu voir une manière de rendre dynamique l'utilisation de HAProxy.
 Malheureusement dans notre cas, nous avions déjà travaillé avec le concurrent Traefik qui est bien plus smart sur sa manière de gestion de Docker (cf. Task5 - question4).
