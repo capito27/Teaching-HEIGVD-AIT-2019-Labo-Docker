@@ -1,0 +1,29 @@
+# The base image is one of the offical one
+FROM node:latest
+
+# TODO: [GEN] Replace with your name and email
+MAINTAINER John Dove <john.doe@heig-vd.ch>
+
+# Install the required tools to run our webapp and some utils
+RUN apt-get update && apt-get -y install wget curl vim && apt-get clean && npm install -g bower
+
+# Create app directory
+WORKDIR /backend/app
+
+# We copy the package.json to allow for dependency installation
+COPY app/package*.json ./
+
+# We then install the node dependencies
+RUN npm install
+
+# We then copy the app sources
+COPY app .
+
+# We then finally run the bower install
+RUN bower install --allow-root
+
+# Expose the web application port
+EXPOSE 3000
+
+# Set the default container command, which can still be overwritten if needed
+CMD [ "node", "app" ]

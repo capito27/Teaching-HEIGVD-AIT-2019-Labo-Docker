@@ -1,0 +1,30 @@
+version: '3.7'
+
+services:
+  treafik:
+    image: traefik
+    restart: unless-stopped
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+  webapp:
+    build:
+      context: ./webapp
+      dockerfile: Dockerfile2
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.webapp.rule=Host(`localhost`)"
+      - "traefik.http.services.webapp.loadbalancer.server.port=3000"
+      - "traefik.http.services.webapp.loadbalancer.sticky.cookie.name=StickySessionCookie"
+      - "traefik.http.services.webapp.loadbalancer.sticky.cookie.httpOnly=true"
+      - "traefik.http.middlewares.latency-check.circuitbreaker.expression=LatencyAtQuantileMS(50.0) > 100 || NetworkErrorRatio > 0.30"
+
