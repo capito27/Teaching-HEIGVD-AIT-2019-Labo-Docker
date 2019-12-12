@@ -15,4 +15,11 @@ La voici à nouveau :
 
 > Ainsi que si l'un des noeuds crash, il faut une interaction manuelle pour
 
-###3
+###3)
+
+Serf utilise un protocol léger appeler Gossip. 
+Son principe est qu'il y aura une création d'un graph de nodes qui communiqueront avec leur voisin. 
+Dès lors, l'ensemble des nodes vont régulièrement communiquer avec leur voisin pour voir s'ils sont en vie. 
+Dès que cela echoue, un message est envoyé à ces voisions qui propagerons à l'ensemble du réseau ce qui permet d'avoir une propagation de l'information de manière très rapide. 
+Serf permet par l'élaboration de ce réseau de pouvoir transmettre des messages et des queries, c'est ce mecanisme qui est utiliser pour donner la connaissance des noeuds vivants à HAProxy. 
+Un autre alternative très mauvaise serait de travailler avec NMAP.
